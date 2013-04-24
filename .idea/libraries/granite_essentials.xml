@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="granite-essentials" type="flex">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/granite-essentials.swc!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

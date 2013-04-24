@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="granite" type="flex">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/granite.swc!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
