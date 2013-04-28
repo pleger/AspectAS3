@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
+import org.apache.velocity.exception.MethodInvocationException;
 import uk.co.badgersinfoil.metaas.ActionScriptFactory;
 import uk.co.badgersinfoil.metaas.ActionScriptProject;
 import uk.co.badgersinfoil.metaas.dom.*;
@@ -14,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AspectASWriter {
@@ -137,32 +139,40 @@ public class AspectASWriter {
 
     //This method really instruments for now
     private void instrumentMethods(ASClassType clazz, ASClassType clazzT) {
-
         for (Object anMethod : clazz.getMethods()) {
             ASMethod method = (ASMethod) anMethod;
             ASMethod methodT = clazzT.newMethod(method.getName(),method.getVisibility(),method.getType());
+            ASFunctionExpression wrap = factory.newFunctionExpression();
 
+            // TODO: fast and simple cloning function
             for (Object anArg: method.getArgs()) {
                 ASArg arg = (ASArg) anArg;
                 ASArg argT = methodT.addParam(arg.getName(), arg.getType());
                 argT.setDefault(arg.getDefaultString());
             }
-
-            ASFunctionExpression wrap = factory.newFunctionExpression();
-
             for (Object s: method.getStatementList() ) {
                 wrap.addStmt(s.toString());
             }
 
-            //ASDeclarationStatement end = methodT.newDeclaration("__wrap__ = " + wrap.toString());
-            methodT.addStmt("return AspectASRuntime.wrap(this,"+wrap.toString()+",arguments,\""+
-                            clazz.getName()+ "\",\""+ method.getName()+ "\");");
+            List<Expression> wrapArguments = new ArrayList<Expression>(5);
+            wrapArguments.add(factory.newSimpleName("this"));
+            wrapArguments.add(wrap);
+            wrapArguments.add(factory.newSimpleName("arguments"));
+            wrapArguments.add(factory.newStringLiteral(clazz.getName()));
+            wrapArguments.add(factory.newStringLiteral(method.getName()));
 
-            //methodT.newExprStmt(wrap);
-            //methodT.newReturn(wrap);
+            ASInvocationExpression invocation = factory.newInvocationExpression(
+                factory.newExpression("AspectASRuntime.wrap"),
+                wrapArguments
+            );
+            if ("void".equals(method.getType()) || method.getName().equals(clazz.getName())) {
+                methodT.newExprStmt(invocation);
+            }
+            else {
+                methodT.newReturn(invocation);
+            }
         }
     }
-
 
     private void instrumentImport(ASPackage pkg,ASPackage pkgT) {
         pkgT.setName(pkg.getName());
@@ -171,11 +181,4 @@ public class AspectASWriter {
             pkgT.addImport((String) anImport);
         }
     }
-
-
-
-
-
-
-
 }

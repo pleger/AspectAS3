@@ -2,7 +2,7 @@
 <module type="Flex" version="4">
   <component name="FlexBuildConfigurationManager" active="AspectAS3">
     <configurations>
-      <configuration name="AspectAS3" target-platform="Desktop" pure-as="true" main-class="AspectAS3" output-file="AspectAS3.swf" output-folder="$MODULE_DIR$/../out/production/AspectAS3">
+      <configuration name="AspectAS3" target-platform="Desktop" pure-as="true" main-class="Main" output-file="AspectAS3.swf" output-folder="$MODULE_DIR$/../out/production/AspectAS3">
         <dependencies target-player="11.4">
           <entries>
             <entry library-name="granite" library-level="project">

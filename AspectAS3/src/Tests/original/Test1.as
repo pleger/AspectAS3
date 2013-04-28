@@ -9,7 +9,7 @@ package Tests.original{
 			trace('m1');
 		}
 
-        public function m2(val1:int) {
+        public function m2(val1:int):void {
             trace("m2");
         }
 
