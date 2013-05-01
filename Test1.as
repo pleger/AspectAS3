@@ -1,15 +1,21 @@
 package Tests.original{
+
+    import test.aaa.*;
+	import aaa.bbb.ccc;
+
 	public class Test1 {
+	    
+		public var member:String = "hoge123";
+		private var hoge:int = 12;
 
         public function Test1() {
-
         }
 
 		public function m1() {
 			trace('m1');
 		}
 
-        public function m2(val1:int):void {
+        public function m2(val1:int) {
             trace("m2");
         }
 

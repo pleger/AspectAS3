@@ -14,6 +14,7 @@ public class AspectASRuntime {
             if (asp.executePC(jp)) {
 
                 var kind:int = asp.getKind();
+
                 if (kind == Aspect.BEFORE) {
                     asp.executeAdv(jp);
                     val = jp.proceed();
@@ -30,6 +31,7 @@ public class AspectASRuntime {
             }
 
         }
+
         return  val;
     }
 

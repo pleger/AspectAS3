@@ -16,7 +16,7 @@ package  Tests.original{
 		}
 		public function m3(val1:int):int {
 			return AspectASRuntime.wrap(this, function () {
-				trace("m3");
+				trace("mm3");
 				return 0;
 			}, arguments, "Test1", "m3");
 		}

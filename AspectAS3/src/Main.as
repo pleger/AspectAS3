@@ -8,7 +8,7 @@
 package {
 
 
-import Tests.instrumented.Tests.original.Test1;
+import Tests.instrumented.Tests.original.Test1_org;
 
 import flash.system.SecurityPrivilege;
 
@@ -30,7 +30,7 @@ public class Main extends Sprite {
 
         var pc = function(jp:JoinPoint):Boolean {
             var jp1:ExecJoinPoint = ExecJoinPoint(jp);
-            return jp1.getClassName()== "Test1" && jp1.getMethodName() == "m2"
+            return jp1.getClassName()== "Test1" && jp1.getMethodName() == "m1"
         };
 
         var adv =  function(jp:JoinPoint) {
@@ -38,7 +38,7 @@ public class Main extends Sprite {
         };
 
 
-        var aspect:Aspect = new Aspect(pc,adv, Aspect.AROUND);
+        var aspect:Aspect = new Aspect(pc,adv, Aspect.BEFORE);
 
 
         /*
@@ -54,10 +54,11 @@ public class Main extends Sprite {
         AspectASRuntime.deploy(aspect);
 
         var aspected:Boolean = true;
-        var test:Test1;
+        var test:Test1_org;
+
 
         if (aspected) {
-            test = new Test1();
+            test = new Test1_org();
         }else {
             //do something
         }
@@ -65,10 +66,12 @@ public class Main extends Sprite {
         test.m1();
 
 
+        /*
         var textField:TextField = new TextField();
         textField.text = "Hello, World";
         trace("CHAO!---2");
         addChild(textField);
+        */
     }
 }
 }
